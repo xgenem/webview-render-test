@@ -1,6 +1,7 @@
 import { usePosts } from "@/hooks/posts";
+import { getHTMLContent } from "@/lib/htmlWrapper";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 
@@ -8,6 +9,11 @@ function Post() {
   const navigation = useNavigation();
   const { id } = useLocalSearchParams();
   const { post, isLoading } = usePosts(id as string);
+
+  const htmlContent = useMemo(
+    () => getHTMLContent(post.content),
+    [post.content]
+  );
 
   useEffect(() => {
     navigation.setOptions({
@@ -20,11 +26,17 @@ function Post() {
   }
 
   return (
-    <WebView
-      style={styles.container}
-      originWhitelist={["*"]}
-      source={{ html: post.content }}
-    />
+    <View style={styles.container}>
+      <WebView
+        originWhitelist={["*"]}
+        source={{ html: htmlContent }}
+        javaScriptEnabled={true}
+        style={{ flex: 1 }}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
+    </View>
   );
 }
 
