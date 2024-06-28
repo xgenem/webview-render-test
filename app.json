@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.eugenemaning.webrendertest"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +22,19 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "output": "server"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+        "origin": "https://eugenemaning.com" 
+        }
+      ]
+    ],
+    "experiments": {
+      "tsconfigPaths": true
     }
   }
 }
